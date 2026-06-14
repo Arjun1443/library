@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📚 Book Library Manager</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1><i class="fas fa-book-open"></i> Book Library Manager</h1>
+            <p>Manage your book collection with ease</p>
+        </header>
+
+        <!-- Statistics Dashboard -->
+        <div class="stats-dashboard" id="statsDashboard">
+            <div class="stat-card">
+                <i class="fas fa-book"></i>
+                <h3 id="totalBooks">0</h3>
+                <p>Total Books</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-check-circle"></i>
+                <h3 id="inStockBooks">0</h3>
+                <p>In Stock</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-star"></i>
+                <h3 id="avgRating">0</h3>
+                <p>Avg Rating</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-tags"></i>
+                <h3 id="categoriesCount">0</h3>
+                <p>Categories</p>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="btn btn-primary" onclick="showAddBookModal()">
+                <i class="fas fa-plus"></i> Add New Book
+            </button>
+            <button class="btn btn-secondary" onclick="refreshBooks()">
+                <i class="fas fa-sync-alt"></i> Refresh
+            </button>
+            <button class="btn btn-info" onclick="showStats()">
+                <i class="fas fa-chart-bar"></i> View Stats
+            </button>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+            <div class="filter-group">
+                <input type="text" id="searchInput" placeholder="🔍 Search by title or author..." onkeyup="applyFilters()">
+            </div>
+            <div class="filter-group">
+                <select id="categoryFilter" onchange="applyFilters()">
+                    <option value="">All Categories</option>
+                    <option value="fiction">Fiction</option>
+                    <option value="non-fiction">Non-Fiction</option>
+                    <option value="science">Science</option>
+                    <option value="technology">Technology</option>
+                    <option value="history">History</option>
+                    <option value="biography">Biography</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <select id="stockFilter" onchange="applyFilters()">
+                    <option value="">All Books</option>
+                    <option value="true">In Stock</option>
+                    <option value="false">Out of Stock</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <input type="number" id="minRating" placeholder="Min Rating (1-5)" min="1" max="5" step="0.1" onchange="applyFilters()">
+            </div>
+        </div>
+
+        <!-- Books Grid -->
+        <div class="books-grid" id="booksGrid">
+            <div class="loading">Loading books...</div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Book Modal -->
+    <div id="bookModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle">Add New Book</h2>
+            <form id="bookForm">
+                <input type="hidden" id="bookId">
+                <div class="form-group">
+                    <label>Title:</label>
+                    <input type="text" id="title" required>
+                </div>
+                <div class="form-group">
+                    <label>Author:</label>
+                    <input type="text" id="author" required>
+                </div>
+                <div class="form-group">
+                    <label>Category:</label>
+                    <select id="category" required>
+                        <option value="fiction">Fiction</option>
+                        <option value="non-fiction">Non-Fiction</option>
+                        <option value="science">Science</option>
+                        <option value="technology">Technology</option>
+                        <option value="history">History</option>
+                        <option value="biography">Biography</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Year:</label>
+                        <input type="number" id="year" required min="1000" max="2026">
+                    </div>
+                    <div class="form-group">
+                        <label>Price ($):</label>
+                        <input type="number" id="price" required step="0.01" min="0.01" max="1000">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Rating (0-5):</label>
+                        <input type="number" id="rating" required step="0.1" min="0" max="5">
+                    </div>
+                    <div class="form-group">
+                        <label>In Stock:</label>
+                        <select id="inStock">
+                            <option value="true">Yes</option>
+                            <option value="false">No</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Save Book</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Stats Modal -->
+    <div id="statsModal" class="modal">
+        <div class="modal-content stats-modal">
+            <span class="close" onclick="closeStatsModal()">&times;</span>
+            <h2><i class="fas fa-chart-line"></i> Library Statistics</h2>
+            <div id="statsContent"></div>
+        </div>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
