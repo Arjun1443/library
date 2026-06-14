@@ -1,5 +1,4 @@
-const API_BASE_URL = 'librarysample-ghgjfmhnhxasgtdb.canadacentral-01.azurewebsites.net';
-
+const API_BASE_URL = 'https://librarysample-ghgjfmhnhxasgtdb.canadacentral-01.azurewebsites.net';
 // Load books when page loads
 document.addEventListener('DOMContentLoaded', () => {
     loadBooks();
