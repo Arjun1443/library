@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://librarysample-ghgjfmhnhxasgtdb.canadacentral-01.azurewebsites.net';
+const API_BASE_URL = '';
 // Load books when page loads
 document.addEventListener('DOMContentLoaded', () => {
     loadBooks();
@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Load all books
 async function loadBooks() {
     try {
-        const response = await fetch(`${API_BASE_URL}/books`);
+        const response = await fetch(`/books`);
         const books = await response.json();
         displayBooks(books);
     } catch (error) {
@@ -90,7 +90,7 @@ function showAddBookModal() {
 // Edit book
 async function editBook(id) {
     try {
-        const response = await fetch(`${API_BASE_URL}/books/${id}`);
+        const response = await fetch(`/books/${id}`);
         const book = await response.json();
         
         document.getElementById('modalTitle').textContent = 'Edit Book';
@@ -114,7 +114,7 @@ async function editBook(id) {
 async function deleteBook(id) {
     if (confirm('Are you sure you want to delete this book?')) {
         try {
-            const response = await fetch(`${API_BASE_URL}/books/${id}`, {
+            const response = await fetch(`/books/${id}`, {
                 method: 'DELETE'
             });
             
@@ -151,14 +151,14 @@ document.getElementById('bookForm').addEventListener('submit', async (e) => {
         let response;
         if (bookId) {
             // Update existing book
-            response = await fetch(`${API_BASE_URL}/books/${bookId}`, {
+            response = await fetch(`/books/${bookId}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(bookData)
             });
         } else {
             // Create new book
-            response = await fetch(`${API_BASE_URL}/books`, {
+            response = await fetch(`/books`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(bookData)
@@ -183,7 +183,7 @@ document.getElementById('bookForm').addEventListener('submit', async (e) => {
 // Load statistics
 async function loadStats() {
     try {
-        const response = await fetch(`${API_BASE_URL}/stats`);
+        const response = await fetch(`/stats`);
         const stats = await response.json();
         
         document.getElementById('totalBooks').textContent = stats.total_books;
@@ -198,7 +198,7 @@ async function loadStats() {
 // Show detailed stats in modal
 async function showStats() {
     try {
-        const response = await fetch(`${API_BASE_URL}/stats`);
+        const response = await fetch(`/stats`);
         const stats = await response.json();
         
         const statsContent = document.getElementById('statsContent');
